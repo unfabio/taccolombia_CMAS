@@ -7,14 +7,14 @@ function InterpretarLinea(Linea){
 		case '2':
 			val.NumeroDoc = Linea.substr(31,15);
 			val.Fecha = Linea.substr(22,6);
-			val.codigodeagente = Linea.substr(27,4);
+			val.codigodeagente = Linea.substr(7,8);// le cambie
 			break;
 		case '4':
-			val.tasa = Linea.substr(108,11);
-			val.kitCombustible = Linea.substr(119,11);
-			val.ivatarifaneta = Linea.substr(130,11);
-			val.total = Linea.substr(141,11);
-			val.tarifaneta = Linea.substr(86,11);
+			val.tasa = Linea.substr(121,7);//le cambie
+			val.kitCombustible = Linea.substr(110,7);//le cambie
+			val.tasaadministrativa = Linea.substr(132,7);// le cambie
+			val.total = Linea.substr(144,8);//le quite el COP
+			val.tarifaneta = Linea.substr(89,8);// le quite el COP
 			break;
 		case '5':
 			val.TaxFeeType5 = Linea.substr(29,8);
