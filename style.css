@@ -1,11 +1,9 @@
 html {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 100%;
-  background: #333;
 }
 
 #page-wrapper {
-  width: 600px;
   background: #FFF;
   padding: 1em;
   margin: 1em auto;
@@ -17,11 +15,9 @@ html {
 h1 {
 	margin-top: 0;
 }
-
-img {
-  max-width: 100%;
+input[type=file] {
+    display: inline-block;
 }
-
 #fileDisplayArea {
   margin-top: 2em;
   width: 100%;

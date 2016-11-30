@@ -4,6 +4,10 @@
 	<meta charset="utf-8">
 	<title>CONVERSOR CMAS</title>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
 	<link rel="stylesheet" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
@@ -13,10 +17,18 @@
 		<h1>CONVERSOR CMAS</h1>
 		<div>
 			Seleciones un archivo:
-			<input type="file" id="fileInput">
+			<input type="file" id="fileInput" class="btn btn-primary">
+			<button type="button" class="btn btn-success generar">Generar</button>
+			<button type="button" class="btn btn-info descargar">Descargar</button>
 		</div>
-		<ul id="fileDisplayArea">
-		<ul>
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">Formato salida</div>
+
+			<!-- Table -->
+			<table class="table table-striped table-bordered" id="fileDisplayArea">
+			</table>
+		</div>
 
 	</div>
 
