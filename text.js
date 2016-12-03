@@ -41,9 +41,6 @@ function InterpretarLinea(Linea){
 }
 
 
-
-
-
 window.onload = function() {
 		var fileInput = document.getElementById('fileInput');
 		var fileDisplayArea = $('#fileDisplayArea');
