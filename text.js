@@ -14,6 +14,8 @@ function InterpretarLinea(Linea){
 			val.tasa = Linea.substr(121,7);//le cambie
 			val.kitCombustible = Linea.substr(110,7);//le cambie
 			val.tasaadministrativa = Linea.substr(132,7);// le cambie
+			val.Ruta = Linea.substr(20,7);
+			val.CentroDeCosto=CentroDeCosto[val.Ruta];
 			val.total = Linea.substr(144,8);//le quite el COP
 			val.tarifaneta = Linea.substr(89,8);// le quite el COP
 			break;
@@ -37,6 +39,8 @@ function InterpretarLinea(Linea){
 		default:
 	}
 }
+
+
 
 
 
