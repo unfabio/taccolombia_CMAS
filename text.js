@@ -40,58 +40,63 @@ function InterpretarLinea(Linea){
 	}
 }
 
+var fileDisplayArea = $('#fileDisplayArea');
 
 window.onload = function() {
 		var fileInput = document.getElementById('fileInput');
-		var fileDisplayArea = $('#fileDisplayArea');
 
 		fileInput.addEventListener('change', Generar );
 		function Generar() {
-			csv="";
 			data=[];
-			fileDisplayArea.html("");
-			var file = fileInput.files[0];
 			var textType = /.CMAS$/;
-
-			if (file.name.match(textType)) {
-				var reader = new FileReader();
-
-				reader.onload = function(e) {
-					Lineas= reader.result.split('\n');
-					for(i in Lineas ){
-						InterpretarLinea(Lineas[i]);
-					}
-
-					var $thead = $('<thead>');
-					fileDisplayArea.append($thead);
-
-					var $tr = $('<tr>');
-					$thead.append($tr);
-					for(i in data[0] ){
-						csv+=i +";";
-						$tr.append('<th>'+i+ '</th>');
-					}
-
-					csv+="\n";
-
-					var $tbody = $('<tbody>');
-					fileDisplayArea.append($tbody);
-
-					for(d in data ){
-						var $tr = $('<tr>');
-						$tbody.append($tr);
-						for(i in data[d] ){
-							csv+=data[d][i] +";";
-							$tr.append('<td>'+data[d][i]+ '</td>');
+			for(var f=0; fileInput.files.length>f;f++ ){
+				var file = fileInput.files[f];
+				if (file.name.match(textType)) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						Lineas= this.result.split('\n');
+						for(i in Lineas ){
+							InterpretarLinea(Lineas[i]);
 						}
-						csv+="\n";
+						PrintTabla();
 					}
+					reader.readAsText(file);
+				} else {
+					fileDisplayArea.innerText = "Debe ingresar un archivo tipo CMAS";
 				}
-				reader.readAsText(file);
-			} else {
-				fileDisplayArea.innerText = "Debe ingresar un archivo tipo CMAS";
 			}
+
 		};
+
+		function PrintTabla(){
+			csv="";
+			fileDisplayArea.html("");
+			var $thead = $('<thead>');
+			fileDisplayArea.append($thead);
+
+			var $tr = $('<tr>');
+			$thead.append($tr);
+			for(i in data[0] ){
+				csv+=i +";";
+				$tr.append('<th>'+i+ '</th>');
+			}
+
+			csv+="\n";
+
+			var $tbody = $('<tbody>');
+			fileDisplayArea.append($tbody);
+
+			for(d in data ){
+				var $tr = $('<tr>');
+				$tbody.append($tr);
+				for(i in data[d] ){
+					csv+=data[d][i] +";";
+					$tr.append('<td>'+data[d][i]+ '</td>');
+				}
+				csv+="\n";
+			}
+		}
+
 		$('.generar').on( "click", Generar);
 
 		$('.descargar').on( "click", function () {
