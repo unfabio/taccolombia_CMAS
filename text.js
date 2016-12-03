@@ -1,5 +1,31 @@
 
 var val = {},data,csv;
+
+var datos=[
+  "NumeroDoc",
+  "Fecha",
+  "codigodeagente",
+  "tasa",
+  "kitCombustible",
+  "tasaadministrativa",
+  "Ruta",
+  "CentroDeCosto",
+  "total",
+  "tarifaneta",
+  "TaxFeeType5",
+  "TaxFeeAmount6",
+  "TaxFeeType7",
+  "TaxFeeAmount8",
+  "TaxFeeType9",
+  "TaxFeeAmount10",
+  "TaxFeeType15",
+  "TaxFeeAmount16",
+  "TaxFeeType17",
+  "TaxFeeAmount18",
+  "TaxFeeType19",
+  "TaxFeeAmount20"
+]
+
 function InterpretarLinea(Linea){
 	switch (Linea[0]) {
 		case '1':
@@ -7,7 +33,10 @@ function InterpretarLinea(Linea){
 		case '2':
 			val = {};
 			val.NumeroDoc = Linea.substr(31,15);
-			val.Fecha = Linea.substr(22,6);
+			var day = Linea.substr(26,2);
+			var month = Linea.substr(24,2);
+			var year = Linea.substr(22,2);
+			val.Fecha = day+'/' + month + '/20' +year;
 			val.codigodeagente = Linea.substr(7,8);// le cambie
 			break;
 		case '4':
@@ -68,36 +97,44 @@ window.onload = function() {
 
 		};
 
-		function PrintTabla(){
+		function PrintTabla(ver){
 			csv="";
 			fileDisplayArea.html("");
-			var $thead = $('<thead>');
-			fileDisplayArea.append($thead);
-
-			var $tr = $('<tr>');
-			$thead.append($tr);
-			for(i in data[0] ){
-				csv+=i +";";
-				$tr.append('<th>'+i+ '</th>');
+			if(ver){
+				var $thead = $('<thead>');
+				fileDisplayArea.append($thead);
+				var $tr = $('<tr>');
+				$thead.append($tr);
+			}
+			for(i in datos ){
+				csv+=datos[i] +";";
+				if(ver){
+					$tr.append('<th>'+datos[i]+ '</th>');
+				}
 			}
 
 			csv+="\n";
-
-			var $tbody = $('<tbody>');
-			fileDisplayArea.append($tbody);
-
+			if(ver){
+				var $tbody = $('<tbody>');
+				fileDisplayArea.append($tbody);
+			}
 			for(d in data ){
-				var $tr = $('<tr>');
-				$tbody.append($tr);
-				for(i in data[d] ){
-					csv+=data[d][i] +";";
-					$tr.append('<td>'+data[d][i]+ '</td>');
+				if(ver){
+					var $tr = $('<tr>');
+					$tbody.append($tr);
+				}
+				for(i in datos ){
+					valor = data[d][datos[i]] || "";
+					csv+=valor+";";
+					if(ver){
+						$tr.append('<td>'+valor+ '</td>');
+					}
 				}
 				csv+="\n";
 			}
 		}
 
-		$('.generar').on( "click", Generar);
+		$('.vertabla').on( "click", function () {PrintTabla(true)});
 
 		$('.descargar').on( "click", function () {
 		  // Save Dialog
