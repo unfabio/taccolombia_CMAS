@@ -5,20 +5,16 @@ var datos=[
   "NumeroDoc",
   "Fecha",
   "codigodeagente",
-  "tasa",
-  "kitCombustible",
-  "tasaadministrativa",
   "Ruta",
   "CentroDeCosto",
   "total",
   "tarifaneta",
-  "6A",
-  "6T",
-  "CO",
-  "YQ",
-  "YS",
-  "OD",
-]
+  "Tarifa Administrativa (6A+6T)",//TarifaAdministrativa(6A+6T)
+  "TasaAeroPortuaria(CO)",//TasaAeroPortuaria(CO)
+  "kit Combustible (YQ)",// kit Combustible
+  "IVA (YS)",// IVA
+  "Penalidad (OD)",// Penalidad
+];
 
 function InterpretarLinea(Linea){
 	switch (Linea[0]) {
@@ -34,9 +30,6 @@ function InterpretarLinea(Linea){
 			val.codigodeagente = Linea.substr(7,8);// le cambie
 			break;
 		case '4':
-			val.tasa = Linea.substr(121,7);//le cambie
-			val.kitCombustible = Linea.substr(110,7);//le cambie
-			val.tasaadministrativa = Linea.substr(132,7);// le cambie
 			val.Ruta = Linea.substr(20,7);
 			val.CentroDeCosto=CentroDeCosto[val.Ruta];
 			val.total = Linea.substr(144,8);//le quite el COP
@@ -44,10 +37,31 @@ function InterpretarLinea(Linea){
 			break;
 		case '5':
             var TaxFeeType,TaxFeeAmount;
+            val["Tarifa Administrativa (6A+6T)"]=0;
             for(var f=29;f<137;f+=19 ){
                 TaxFeeType = Linea.substr(f,8).trim();
-    			TaxFeeAmount = Linea.substr(f+8,11);
-                val[TaxFeeType] = parseInt(TaxFeeAmount);
+    			TaxFeeAmount = parseInt(Linea.substr(f+8,11));
+                switch (TaxFeeType) {
+                    case "6A"://TarifaAdministrativa(6A+6T)
+                    val["Tarifa Administrativa (6A+6T)"]+=TaxFeeAmount;
+                    break;
+                    case "6T":
+                    val["Tarifa Administrativa (6A+6T)"]=TaxFeeAmount;
+                    break;
+                    case "CO"://TasaAeroPortuaria(CO)
+                    val["TasaAeroPortuaria(CO)"]=TaxFeeAmount;
+                    break;
+                    case "YQ":// kit Combustible
+                    val["kit Combustible (YQ)"]=TaxFeeAmount;
+                    break;
+                    case "YS":// IVA
+                    val["IVA (YS)"]=TaxFeeAmount;
+                    break;
+                    case "OD":// Penalidad
+                    val["Penalidad (OD)"]=TaxFeeAmount;
+                    break;
+                }
+
                 if(!(TaxFeeType in datos)){
                     console.log("Valor TaxFeeType [" + TaxFeeType+"] no reconocido");
                 }
@@ -130,7 +144,7 @@ window.onload = function() {
 					$tbody.append($tr);
 				}
 				for(i in datos ){
-					valor = data[d][datos[i]] || "";
+					valor = data[d][datos[i]] || 0;
 					csv+=valor+";";
 					if(ver){
 						$tr.append('<td>'+valor+ '</td>');
