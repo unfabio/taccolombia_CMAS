@@ -16,7 +16,8 @@ var datos=[
   "6T",
   "CO",
   "YQ",
-  "YS",,
+  "YS",
+  "OD",
 ]
 
 function InterpretarLinea(Linea){
@@ -47,6 +48,9 @@ function InterpretarLinea(Linea){
                 TaxFeeType = Linea.substr(f,8).trim();
     			TaxFeeAmount = Linea.substr(f+8,11);
                 val[TaxFeeType] = parseInt(TaxFeeAmount);
+                if(!(TaxFeeType in datos)){
+                    console.log("Valor TaxFeeType [" + TaxFeeType+"] no reconocido");
+                }
             }
 
 			/*
