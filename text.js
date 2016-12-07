@@ -47,7 +47,7 @@ function InterpretarLinea(Linea){
                     val["Tarifa Administrativa (6A+6T)"]+=TaxFeeAmount;
                     break;
                     case "6T":
-                    val["Tarifa Administrativa (6A+6T)"]=TaxFeeAmount;
+                    val["Tarifa Administrativa (6A+6T)"]+=TaxFeeAmount;
                     break;
                     case "CO"://TasaAeroPortuaria(CO)
                     val["TasaAeroPortuaria(CO)"]=TaxFeeAmount;
