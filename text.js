@@ -32,12 +32,12 @@ function InterpretarLinea(Linea){
 		case '4':
 			val.Ruta = Linea.substr(20,7);
 			val.CentroDeCosto=CentroDeCosto[val.Ruta];
-			val.total = Linea.substr(144,8);//le quite el COP
 			val.tarifaneta = Linea.substr(89,8);// le quite el COP
 			break;
 		case '5':
             var TaxFeeType,TaxFeeAmount;
             val["Tarifa Administrativa (6A+6T)"]=0;
+            val.total = parseInt(Linea.substr(86,11));//le quite el COP
             for(var f=29;f<137;f+=19 ){
                 TaxFeeType = Linea.substr(f,8).trim();
     			TaxFeeAmount = parseInt(Linea.substr(f+8,11));
