@@ -12,18 +12,11 @@ var datos=[
   "CentroDeCosto",
   "total",
   "tarifaneta",
-  "TaxFeeType5",
-  "TaxFeeAmount6",
-  "TaxFeeType7",
-  "TaxFeeAmount8",
-  "TaxFeeType9",
-  "TaxFeeAmount10",
-  "TaxFeeType15",
-  "TaxFeeAmount16",
-  "TaxFeeType17",
-  "TaxFeeAmount18",
-  "TaxFeeType19",
-  "TaxFeeAmount20"
+  "6A",
+  "6T",
+  "CO",
+  "YQ",
+  "YS",,
 ]
 
 function InterpretarLinea(Linea){
@@ -49,6 +42,14 @@ function InterpretarLinea(Linea){
 			val.tarifaneta = Linea.substr(89,8);// le quite el COP
 			break;
 		case '5':
+            var TaxFeeType,TaxFeeAmount;
+            for(var f=29;f<137;f+=19 ){
+                TaxFeeType = Linea.substr(f,8).trim();
+    			TaxFeeAmount = Linea.substr(f+8,11);
+                val[TaxFeeType] = parseInt(TaxFeeAmount);
+            }
+
+			/*
 			val.TaxFeeType5 = Linea.substr(29,8);
 			val.TaxFeeAmount6 = Linea.substr(37,11);
 			val.TaxFeeType7 = Linea.substr(48,8);
@@ -61,6 +62,7 @@ function InterpretarLinea(Linea){
 			val.TaxFeeAmount18 = Linea.substr(140,11);
 			val.TaxFeeType19 = Linea.substr(151,8);
 			val.TaxFeeAmount20 = Linea.substr(159,11);
+            */
 			break;
 		case 'K':
 			data.push(val);
