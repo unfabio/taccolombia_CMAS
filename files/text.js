@@ -21,6 +21,7 @@ var datos=[
 ];
 
 function InterpretarLinea(Linea){
+    var signo = 1;
 	switch (Linea[0]) {
 		case '1':
 			break;
@@ -30,8 +31,10 @@ function InterpretarLinea(Linea){
             val["Tipo de Transaccion"] = Linea.substr(47,4);
             if(val["Tipo de Transaccion"] == "RFND"){
                 val["Naturaleza"]="D";
+                signo=-1;
             }else{
                 val["Naturaleza"]="C";
+                signo =1;
             }
 			var day = Linea.substr(26,2);
 			var month = Linea.substr(24,2);
@@ -41,7 +44,7 @@ function InterpretarLinea(Linea){
 		case '4':
 			val.Ruta = Linea.substr(20,7);
 			val.CentroDeCosto=CentroDeCosto[val.Ruta];
-            var tarifa= parseInt(Linea.substr(100,8));
+            var tarifa= signo * parseInt(Linea.substr(100,8));
             if(/^MP/.test(val["Tipo de Transaccion"])){
 				val["Micelaneos(Exage)"] = tarifa;
             }else{
@@ -51,12 +54,12 @@ function InterpretarLinea(Linea){
 		case '5':
             var TaxFeeType,TaxFeeAmount;
             val["Tarifa Administrativa (6A+6T)"]=0;
-            val.total = parseInt(Linea.substr(86,11));//le quite el COP
+           val.total = signo *parseInt(Linea.substr(86,11));//le quite el COP
             var pos=[29,48,67,113,132];
             for(var posi in pos ){
                 var f=pos[posi];
                 TaxFeeType = Linea.substr(f,8).trim();
-    			TaxFeeAmount = parseInt(Linea.substr(f+8,11));
+    			TaxFeeAmount = signo * parseInt(Linea.substr(f+8,11));
                 switch (TaxFeeType) {
                     case "6A"://TarifaAdministrativa(6A+6T)
                     val["Tarifa Administrativa (6A+6T)"]+=TaxFeeAmount;
