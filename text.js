@@ -3,7 +3,7 @@ var val = {},data,csv;
 
 var datos=[
   "NumeroDoc",
-  "Tipo de Transaccion"
+  "Tipo de Transaccion",
   "Fecha",
   "codigodeagente",
   "Ruta",
