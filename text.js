@@ -7,6 +7,7 @@ var datos=[
   "Naturaleza",
   "Fecha",
   "codigodeagente",
+  "Agencia",
   "Ruta",
   "CentroDeCosto",
   "Tarifa Neta",
@@ -84,7 +85,14 @@ function InterpretarLinea(Linea){
 
         break;
 		case 'K':
-            val.codigodeagente = Linea.substr(128,9);// le cambie
+            val['codigodeagente'] = Linea.substr(128,8);// le cambie
+
+            if(/006T/.test(val['codigodeagente'])){
+                val['Agencia'] = "TAC";
+            }else{
+                val['Agencia'] = AGENCIA[val['codigodeagente']];
+            }
+
 			data.push(val);
 			break;
 		default:
