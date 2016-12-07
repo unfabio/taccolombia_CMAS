@@ -60,28 +60,14 @@ function InterpretarLinea(Linea){
                     case "OD":// Penalidad
                     val["Penalidad (OD)"]=TaxFeeAmount;
                     break;
-                }
-
-                if(!(TaxFeeType in datos)){
+                    default:
                     console.log("Valor TaxFeeType [" + TaxFeeType+"] no reconocido");
                 }
             }
-
-			/*
-			val.TaxFeeType5 = Linea.substr(29,8);
-			val.TaxFeeAmount6 = Linea.substr(37,11);
-			val.TaxFeeType7 = Linea.substr(48,8);
-			val.TaxFeeAmount8 = Linea.substr(56,11);
-			val.TaxFeeType9 = Linea.substr(67,8);
-			val.TaxFeeAmount10 = Linea.substr(75,11);
-			val.TaxFeeType15 = Linea.substr(113,8);
-			val.TaxFeeAmount16 = Linea.substr(121,11);
-			val.TaxFeeType17 = Linea.substr(132,8);
-			val.TaxFeeAmount18 = Linea.substr(140,11);
-			val.TaxFeeType19 = Linea.substr(151,8);
-			val.TaxFeeAmount20 = Linea.substr(159,11);
-            */
 			break;
+        case '6':
+        
+        break;
 		case 'K':
 			data.push(val);
 			break;
