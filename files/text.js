@@ -19,9 +19,8 @@ var datos=[
   "Penalidad (OD)",// Penalidad
   "total",
 ];
-
+var signo = 1;
 function InterpretarLinea(Linea){
-    var signo = 1;
 	switch (Linea[0]) {
 		case '1':
 			break;
@@ -34,7 +33,7 @@ function InterpretarLinea(Linea){
                 signo=-1;
             }else{
                 val["Naturaleza"]="C";
-                signo =1;
+                signo = 1;
             }
 			var day = Linea.substr(26,2);
 			var month = Linea.substr(24,2);
