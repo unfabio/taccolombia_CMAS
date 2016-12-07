@@ -27,7 +27,6 @@ function InterpretarLinea(Linea){
 			var month = Linea.substr(24,2);
 			var year = Linea.substr(22,2);
 			val.Fecha = day+'/' + month + '/20' +year;
-			val.codigodeagente = Linea.substr(7,8);// le cambie
 			break;
 		case '4':
 			val.Ruta = Linea.substr(20,7);
@@ -66,9 +65,10 @@ function InterpretarLinea(Linea){
             }
 			break;
         case '6':
-        
+
         break;
 		case 'K':
+            val.codigodeagente = Linea.substr(128,9);// le cambie
 			data.push(val);
 			break;
 		default:
