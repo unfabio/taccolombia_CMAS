@@ -37,7 +37,9 @@ function InterpretarLinea(Linea){
             var TaxFeeType,TaxFeeAmount;
             val["Tarifa Administrativa (6A+6T)"]=0;
             val.total = parseInt(Linea.substr(86,11));//le quite el COP
-            for(var f=29;f<137;f+=19 ){
+            var pos=[29,48,67,113,132];
+            for(var posi in pos ){
+                var f=pos[posi];
                 TaxFeeType = Linea.substr(f,8).trim();
     			TaxFeeAmount = parseInt(Linea.substr(f+8,11));
                 switch (TaxFeeType) {
