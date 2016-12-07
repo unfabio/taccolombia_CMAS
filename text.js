@@ -8,7 +8,8 @@ var datos=[
   "codigodeagente",
   "Ruta",
   "CentroDeCosto",
-  "tarifaneta",
+  "Tarifa Neta",
+  "Micelaneos(Exage)",
   "Tarifa Administrativa (6A+6T)",//TarifaAdministrativa(6A+6T)
   "TasaAeroPortuaria(CO)",//TasaAeroPortuaria(CO)
   "kit Combustible (YQ)",// kit Combustible
@@ -33,7 +34,12 @@ function InterpretarLinea(Linea){
 		case '4':
 			val.Ruta = Linea.substr(20,7);
 			val.CentroDeCosto=CentroDeCosto[val.Ruta];
-			val.tarifaneta = Linea.substr(100,8);// le quite el COP
+            var tarifa= parseInt(Linea.substr(100,8));
+            if(/^MP/.test(val["Tipo de Transaccion"])){
+				val["Micelaneos(Exage)"] = tarifa;
+            }else{
+                val["Tarifa Neta"] = tarifa;
+            }
 			break;
 		case '5':
             var TaxFeeType,TaxFeeAmount;
