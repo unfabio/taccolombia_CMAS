@@ -77,7 +77,6 @@ function InterpretarLinea(Linea){
                     val["Penalidad (OD)"]=TaxFeeAmount;
                     break;
                     default:
-                    console.log("Valor TaxFeeType [" + TaxFeeType+"] no reconocido");
                 }
             }
 			break;
@@ -85,7 +84,7 @@ function InterpretarLinea(Linea){
 
         break;
 		case 'K':
-            val['codigodeagente'] = Linea.substr(128,8);// le cambie
+            val['codigodeagente'] = Linea.substr(128,7);// le cambie
 
             if(/006T/.test(val['codigodeagente'])){
                 val['Agencia'] = "TAC";
