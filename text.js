@@ -4,6 +4,7 @@ var val = {},data,csv;
 var datos=[
   "NumeroDoc",
   "Tipo de Transaccion",
+  "Naturaleza",
   "Fecha",
   "codigodeagente",
   "Ruta",
@@ -26,6 +27,11 @@ function InterpretarLinea(Linea){
 			val = {};
 			val.NumeroDoc = Linea.substr(31,15);
             val["Tipo de Transaccion"] = Linea.substr(47,4);
+            if(val["Tipo de Transaccion"] == "RFND"){
+                val["Naturaleza"]="D";
+            }else{
+                val["Naturaleza"]="C";
+            }
 			var day = Linea.substr(26,2);
 			var month = Linea.substr(24,2);
 			var year = Linea.substr(22,2);
