@@ -3,17 +3,18 @@ var val = {},data,csv;
 
 var datos=[
   "NumeroDoc",
+  "Tipo de Transaccion"
   "Fecha",
   "codigodeagente",
   "Ruta",
   "CentroDeCosto",
-  "total",
   "tarifaneta",
   "Tarifa Administrativa (6A+6T)",//TarifaAdministrativa(6A+6T)
   "TasaAeroPortuaria(CO)",//TasaAeroPortuaria(CO)
   "kit Combustible (YQ)",// kit Combustible
   "IVA (YS)",// IVA
   "Penalidad (OD)",// Penalidad
+  "total",
 ];
 
 function InterpretarLinea(Linea){
@@ -23,6 +24,7 @@ function InterpretarLinea(Linea){
 		case '2':
 			val = {};
 			val.NumeroDoc = Linea.substr(31,15);
+            val["Tipo de Transaccion"] = Linea.substr(47,4);
 			var day = Linea.substr(26,2);
 			var month = Linea.substr(24,2);
 			var year = Linea.substr(22,2);
