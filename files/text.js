@@ -86,14 +86,13 @@ function InterpretarLinea(Linea){
 
         break;
 		case 'K':
-            val['codigodeagente'] = Linea.substr(128,7);// le cambie
+            val['codigodeagente'] = Linea.substr(128,9);// le cambie
 
             if(/006T/.test(val['codigodeagente'])){
                 val['Agencia'] = "TAC";
             }else{
-                val['Agencia'] = AGENCIA[val['codigodeagente']];
+                val['Agencia'] = AGENCIA[val['codigodeagente'].substr(0,7)];
             }
-
 			data.push(val);
 			break;
 		default:
