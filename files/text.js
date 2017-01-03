@@ -8,6 +8,7 @@ var datos=[
   "Fecha",
   "codigodeagente",
   "Agencia",
+  "Forma de Pago",
   "Ruta",
   "CentroDeCosto",
   "Tarifa Neta",
@@ -84,6 +85,9 @@ function InterpretarLinea(Linea){
 			break;
         case '6':
 
+        break;
+        case '8':
+            val["Forma de Pago"] = Linea.substr(49,2);
         break;
 		case 'K':
             val['codigodeagente'] = Linea.substr(128,9);// le cambie
