@@ -1,5 +1,5 @@
 <?php 
-echo "hola nuevo 5 \n ";
+echo "hola nuevo 6 \n ";
 
 $directorio = "./disony/";
 $ficheros  = scandir($directorio, 1);
