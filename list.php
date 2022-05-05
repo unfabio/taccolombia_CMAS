@@ -1,10 +1,9 @@
 <?php 
-echo "hola nuevo";
+echo "hola nuevo2";
 
 $directorio = "./disony/";
 $ficheros  = scandir($directorio, 1);
 $cmas = array();
-
 
 foreach ($ficheros as $valor) {
 if (preg_match("/\.CMAS\.zip$/i", $valor)) {
