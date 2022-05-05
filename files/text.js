@@ -125,7 +125,7 @@ window.onload = function () {
         const reader = new zip.ZipReader(new zip.BlobReader(file));
         // get all entries from the zip
         const entries = await reader.getEntries();
-        if (entries.length) {
+        if (entries.length && entries[0].filename.match(/.CMAS$/)) {
           // get first entry content as text by using a TextWriter
           const text = await entries[0].getData(new zip.TextWriter());
           // text contains the entry data as a String
@@ -139,7 +139,7 @@ window.onload = function () {
     }
   }
   function Leer(txt) {
-    Lineas = txt.split("\n");
+    Lineas = txt.split(/\n|\r/);
     for (i in Lineas) {
       InterpretarLinea(Lineas[i]);
     }
