@@ -30,17 +30,14 @@ session_start();
       Fechas:
       <input type="text" name="datefilter" value="" class="btn btn-light">
       <input type="file" id="fileInput" class="btn btn-primary" multiple="multiple" accept=".zip, .CMAS">
-      <button type="button" class="btn btn-success vertabla">
+      <button type="button" class="btn btn-success vertabla" data-toggle="collapse" data-target="#collapsetable" aria-expanded="true" aria-controls="collapseExample">
         Ver Tabla
       </button>
       <button type="button" class="btn btn-info descargar">Descargar</button>
       <a href="logout.php" class="btn btn-dark">Cerrar sesión</a>
   </div>
-  <div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Formato salida</div>
+  <div class="collapse show" id="collapsetable">
 
-    <!-- Table -->
     <table class="table table-striped table-bordered" id="fileDisplayArea"></table>
   </div>
 <?php } else { ?>
@@ -52,9 +49,6 @@ session_start();
     <input type="submit" value="Iniciar sesión" class="btn btn-lg btn-primary btn-block" />
   </form>
 <?php } ?>
-
-
-<div>
 
 </div>
 

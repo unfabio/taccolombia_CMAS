@@ -114,25 +114,24 @@ function InterpretarLinea(Linea) {
 var fileDisplayArea = $("#fileDisplayArea");
 let url = "/disony/CO.006T.CRS.P.220409.CMAS.zip";
 let blob;
+async function getfile(url) {
+  blob = await fetch(url).then((r) => r.blob());
+  const reader = new zip.ZipReader(new zip.BlobReader(blob));
+  // get all entries from the zip
+  const entries = await reader.getEntries();
+  if (entries.length && entries[0].filename.match(/.CMAS$/)) {
+    // get first entry content as text by using a TextWriter
+    const text = await entries[0].getData(new zip.TextWriter());
+    // text contains the entry data as a String
+    Leer(text);
+  }
+  // close the ZipReader
+  await reader.close();
+}
 window.onload = function () {
   var fileInput = document.getElementById("fileInput");
 
   fileInput.addEventListener("change", Generar);
-
-  async function getfile(url) {
-    blob = await fetch(url).then((r) => r.blob());
-    const reader = new zip.ZipReader(new zip.BlobReader(blob));
-    // get all entries from the zip
-    const entries = await reader.getEntries();
-    if (entries.length && entries[0].filename.match(/.CMAS$/)) {
-      // get first entry content as text by using a TextWriter
-      const text = await entries[0].getData(new zip.TextWriter());
-      // text contains the entry data as a String
-      Leer(text);
-    }
-    // close the ZipReader
-    await reader.close();
-  }
 
   $(".vertabla").on("click", function () {
     PrintTabla(true);
