@@ -41,6 +41,7 @@ session_start();
 
     <!-- Table -->
     <table class="table table-striped table-bordered" id="fileDisplayArea"></table>
+    <a href="logout.php">Cerrar sesión</a>
   </div>
 <?php } else { ?>
   <form action="login.php" method="post">

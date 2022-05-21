@@ -26,7 +26,7 @@ if ($usuario === $configs["username"] && $palabra_secreta === $configs["password
     $_SESSION["usuario"] = $usuario;
 
     # Luego redireccionamos a la página "Secreta"
-    header("Location: /");
+    header("Location: /kiudata/");
 } else {
     # No coinciden, así que simplemente imprimimos un
     # mensaje diciendo que es incorrecto
