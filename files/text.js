@@ -133,7 +133,7 @@ window.onload = function () {
     // close the ZipReader
     await reader.close();
   }
-  //getfile(url);
+
   $(".vertabla").on("click", function () {
     PrintTabla(true);
   });
@@ -228,6 +228,11 @@ $(function () {
   $('input[name="datefilter"]').on(
     "apply.daterangepicker",
     function (ev, picker) {
+      let url =
+        "./disony/CO.006T.CRS.P." +
+        picker.startDate.format("YYMMDD") +
+        ".CMAS.zip";
+      getfile(url);
       $(this).val(
         picker.startDate.format("MM/DD/YYYY") +
           " - " +
