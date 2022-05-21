@@ -3,16 +3,6 @@
 
 # Iniciar sesión para usar $_SESSION
 session_start();
-
-# Y ahora leer si NO hay algo llamado usuario en la sesión,
-# usando empty (vacío, ¿está vacío?)
-# Recomiendo: https://parzibyte.me/blog/2018/08/09/isset-vs-empty-en-php/
-if (empty($_SESSION["usuario"])) {
-  # Lo redireccionamos al formulario de inicio de sesión
-  header("Location: formulario.html");
-  # Y salimos del script
-  exit();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +26,7 @@ if (empty($_SESSION["usuario"])) {
 <body>
   <div id="page-wrapper">
     <h1>CONVERSOR CMAS</h1>
-    <div>
+    <?php if (empty($_SESSION["usuario"])) { ?>
       Seleciones un archivo:
       <input type="file" id="fileInput" class="btn btn-primary" multiple="multiple" accept=".zip, .CMAS" />
       <button type="button" class="btn btn-success vertabla">
@@ -44,19 +34,34 @@ if (empty($_SESSION["usuario"])) {
       </button>
       <button type="button" class="btn btn-info descargar">Descargar</button>
       <input type="text" name="datefilter" value="" />
-    </div>
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Formato salida</div>
-
-      <!-- Table -->
-      <table class="table table-striped table-bordered" id="fileDisplayArea"></table>
-    </div>
   </div>
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Formato salida</div>
 
-  <script src="files/Agencias.js"></script>
-  <script src="files/centros_de_costo.js"></script>
-  <script src="files/text.js"></script>
+    <!-- Table -->
+    <table class="table table-striped table-bordered" id="fileDisplayArea"></table>
+  </div>
+<?php } else { ?>
+  <form action="login.php" method="post">
+
+    <input name="usuario" type="text" placeholder="Escribe tu nombre de usuario" />
+    <br /><br />
+    <input name="palabra_secreta" type="password" placeholder="Contraseña" />
+    <br /><br />
+    <!--Lo siguiente envía el formulario-->
+    <input type="submit" value="Iniciar sesión" />
+  </form>
+<?php } ?>
+
+
+<div>
+
+</div>
+
+<script src="files/Agencias.js"></script>
+<script src="files/centros_de_costo.js"></script>
+<script src="files/text.js"></script>
 </body>
 
 </html>
