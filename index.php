@@ -28,12 +28,13 @@ session_start();
     <h1>CONVERSOR CMAS</h1>
     <?php if (!empty($_SESSION["usuario"])) { ?>
       Seleciones un archivo:
-      <input type="file" id="fileInput" class="btn btn-primary" multiple="multiple" accept=".zip, .CMAS" />
+      <input type="text" name="datefilter" value="" class="btn btn-light">
+      <!--<input type="file" id="fileInput" class="btn btn-primary" multiple="multiple" accept=".zip, .CMAS">-->
       <button type="button" class="btn btn-success vertabla">
         Ver Tabla
       </button>
       <button type="button" class="btn btn-info descargar">Descargar</button>
-      <input type="text" name="datefilter" value="" />
+      <a href="logout.php" class="btn btn-dark">Cerrar sesión</a>
   </div>
   <div class="panel panel-default">
     <!-- Default panel contents -->
@@ -41,17 +42,16 @@ session_start();
 
     <!-- Table -->
     <table class="table table-striped table-bordered" id="fileDisplayArea"></table>
-    <a href="logout.php">Cerrar sesión</a>
   </div>
 <?php } else { ?>
   <form action="login.php" method="post">
 
-    <input name="usuario" type="text" placeholder="Escribe tu nombre de usuario" />
+    <input name="usuario" type="text" placeholder="Escribe tu nombre de usuario" class="form-control" />
     <br /><br />
-    <input name="palabra_secreta" type="password" placeholder="Contraseña" />
+    <input name="palabra_secreta" type="password" placeholder="Contraseña" class="form-control" />
     <br /><br />
     <!--Lo siguiente envía el formulario-->
-    <input type="submit" value="Iniciar sesión" />
+    <input type="submit" value="Iniciar sesión" class="btn btn-lg btn-primary btn-block" />
   </form>
 <?php } ?>
 
