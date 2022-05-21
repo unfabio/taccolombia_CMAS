@@ -30,7 +30,7 @@ session_start();
       Fechas:
       <input type="text" name="datefilter" value="" class="btn btn-light">
       <input type="file" id="fileInput" class="btn btn-primary" multiple="multiple" accept=".zip, .CMAS">
-      <button type="button" class="btn btn-success vertabla" data-toggle="collapse" data-target="#collapsetable" aria-expanded="true" aria-controls="collapseExample">
+      <button type="button" class="btn btn-success vertabla" data-toggle="collapse" data-target="#collapsetable" aria-expanded="false" aria-controls="collapseExample">
         Ver Tabla
       </button>
       <button type="button" class="btn btn-info descargar">Descargar</button>

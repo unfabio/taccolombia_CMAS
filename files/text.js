@@ -112,9 +112,9 @@ function InterpretarLinea(Linea) {
 }
 
 var fileDisplayArea = $("#fileDisplayArea");
-let url = "/disony/CO.006T.CRS.P.220409.CMAS.zip";
 let blob;
-async function getfile(url) {
+async function getfile(date) {
+  let url = "./disony/CO.006T.CRS.P." + date + ".CMAS.zip";
   blob = await fetch(url).then((r) => r.blob());
   const reader = new zip.ZipReader(new zip.BlobReader(blob));
   // get all entries from the zip
@@ -227,22 +227,25 @@ $(function () {
   $('input[name="datefilter"]').on(
     "apply.daterangepicker",
     function (ev, picker) {
-      let url =
-        "./disony/CO.006T.CRS.P." +
-        picker.startDate.format("YYMMDD") +
-        ".CMAS.zip";
-      getfile(url);
+      data = [];
       $(this).val(
         picker.startDate.format("MM/DD/YYYY") +
           " - " +
           picker.endDate.format("MM/DD/YYYY")
       );
+      let startDate = new Date(picker.startDate);
+      let endDate = new Date(picker.endDate);
+      for (var d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+        getfile(moment(d).format("YYMMDD"));
+      }
     }
   );
 
   $('input[name="datefilter"]').on(
     "cancel.daterangepicker",
     function (ev, picker) {
+      data = [];
+      PrintTabla();
       $(this).val("");
     }
   );
