@@ -13,7 +13,7 @@ $usuario = $_POST["usuario"];
 $palabra_secreta = $_POST["palabra_secreta"];
 
 # Luego de haber obtenido los valores, ya podemos comprobar:
-if ($usuario === $configs->username && $palabra_secreta === $configs->password) {
+if ($usuario === $configs["username"] && $palabra_secreta === $configs["password"]) {
     # Significa que coinciden, así que vamos a guardar algo
     # en el arreglo superglobal $_SESSION, ya que ese arreglo
     # "persiste" a través de todas las páginas
