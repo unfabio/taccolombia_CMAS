@@ -1,6 +1,12 @@
+/*
+function $(a) {
+  console.log(a);
+}
+let window = window | {};
+*/
 var val = {},
-  data,
-  csv;
+  data = [],
+  csv = "";
 
 var datos = [
   "NumeroDoc",
@@ -106,92 +112,134 @@ function InterpretarLinea(Linea) {
 }
 
 var fileDisplayArea = $("#fileDisplayArea");
-
+let url = "/disony/CO.006T.CRS.P.220409.CMAS.zip";
+let blob;
 window.onload = function () {
   var fileInput = document.getElementById("fileInput");
 
   fileInput.addEventListener("change", Generar);
-  async function Generar() {
-    data = [];
-    for (var f = 0; fileInput.files.length > f; f++) {
-      var file = fileInput.files[f];
-      if (file.name.match(/.CMAS$/)) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          Leer(this.result);
-        };
-        reader.readAsText(file);
-      } else if (file.name.match(/.zip$/)) {
-        const reader = new zip.ZipReader(new zip.BlobReader(file));
-        // get all entries from the zip
-        const entries = await reader.getEntries();
-        if (entries.length && entries[0].filename.match(/.CMAS$/)) {
-          // get first entry content as text by using a TextWriter
-          const text = await entries[0].getData(new zip.TextWriter());
-          // text contains the entry data as a String
-          Leer(text);
-        }
-        // close the ZipReader
-        await reader.close();
-      } else {
-        fileDisplayArea.innerText = "Debe ingresar un archivo tipo CMAS";
-      }
-    }
-  }
-  function Leer(txt) {
-    Lineas = txt.split(/\n|\r/);
-    for (i in Lineas) {
-      InterpretarLinea(Lineas[i]);
-    }
-    PrintTabla();
-  }
 
-  function PrintTabla(ver) {
-    csv = "";
-    fileDisplayArea.html("");
-    if (ver) {
-      var $thead = $("<thead>");
-      fileDisplayArea.append($thead);
-      var $tr = $("<tr>");
-      $thead.append($tr);
+  async function getfile(url) {
+    blob = await fetch(url).then((r) => r.blob());
+    const reader = new zip.ZipReader(new zip.BlobReader(blob));
+    // get all entries from the zip
+    const entries = await reader.getEntries();
+    if (entries.length && entries[0].filename.match(/.CMAS$/)) {
+      // get first entry content as text by using a TextWriter
+      const text = await entries[0].getData(new zip.TextWriter());
+      // text contains the entry data as a String
+      Leer(text);
     }
-    for (i in datos) {
-      csv += datos[i] + ";";
-      if (ver) {
-        $tr.append("<th>" + datos[i] + "</th>");
-      }
-    }
-
-    csv += "\n";
-    if (ver) {
-      var $tbody = $("<tbody>");
-      fileDisplayArea.append($tbody);
-    }
-    for (d in data) {
-      if (ver) {
-        var $tr = $("<tr>");
-        $tbody.append($tr);
-      }
-      for (i in datos) {
-        valor = data[d][datos[i]] || 0;
-        csv += valor + ";";
-        if (ver) {
-          $tr.append("<td>" + valor + "</td>");
-        }
-      }
-      csv += "\n";
-    }
+    // close the ZipReader
+    await reader.close();
   }
-
+  //getfile(url);
   $(".vertabla").on("click", function () {
     PrintTabla(true);
   });
 
   $(".descargar").on("click", function () {
     // Save Dialog
-    fname = fileInput.files[0].name;
+    fname = "CMAS"; //fileInput.files[0].name;
     fname = fname + ".csv";
     var blob = new Blob([csv], { type: "application/csv;charset=utf-8" });
     saveAs(blob, fname);
   });
 };
+async function Generar() {
+  data = [];
+  for (var f = 0; fileInput.files.length > f; f++) {
+    var file = fileInput.files[f];
+    if (file.name.match(/.CMAS$/)) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        Leer(this.result);
+      };
+      reader.readAsText(file);
+    } else if (file.name.match(/.zip$/)) {
+      const reader = new zip.ZipReader(new zip.BlobReader(file));
+      // get all entries from the zip
+      const entries = await reader.getEntries();
+      if (entries.length && entries[0].filename.match(/.CMAS$/)) {
+        // get first entry content as text by using a TextWriter
+        const text = await entries[0].getData(new zip.TextWriter());
+        // text contains the entry data as a String
+        Leer(text);
+      }
+      // close the ZipReader
+      await reader.close();
+    } else {
+      fileDisplayArea.innerText = "Debe ingresar un archivo tipo CMAS";
+    }
+  }
+}
+function Leer(txt) {
+  Lineas = txt.split(/\n|\r/);
+  for (i in Lineas) {
+    InterpretarLinea(Lineas[i]);
+  }
+  PrintTabla();
+}
+
+function PrintTabla(ver) {
+  csv = "";
+  fileDisplayArea.html("");
+  if (ver) {
+    var $thead = $("<thead>");
+    fileDisplayArea.append($thead);
+    var $tr = $("<tr>");
+    $thead.append($tr);
+  }
+  for (i in datos) {
+    csv += datos[i] + ";";
+    if (ver) {
+      $tr.append("<th>" + datos[i] + "</th>");
+    }
+  }
+
+  csv += "\n";
+  if (ver) {
+    var $tbody = $("<tbody>");
+    fileDisplayArea.append($tbody);
+  }
+  for (d in data) {
+    if (ver) {
+      var $tr = $("<tr>");
+      $tbody.append($tr);
+    }
+    for (i in datos) {
+      valor = data[d][datos[i]] || 0;
+      csv += valor + ";";
+      if (ver) {
+        $tr.append("<td>" + valor + "</td>");
+      }
+    }
+    csv += "\n";
+  }
+}
+$(function () {
+  $('input[name="datefilter"]').daterangepicker({
+    autoUpdateInput: false,
+    locale: {
+      cancelLabel: "Clear",
+    },
+  });
+
+  $('input[name="datefilter"]').on(
+    "apply.daterangepicker",
+    function (ev, picker) {
+      $(this).val(
+        picker.startDate.format("MM/DD/YYYY") +
+          " - " +
+          picker.endDate.format("MM/DD/YYYY")
+      );
+    }
+  );
+
+  $('input[name="datefilter"]').on(
+    "cancel.daterangepicker",
+    function (ev, picker) {
+      $(this).val("");
+    }
+  );
+});
