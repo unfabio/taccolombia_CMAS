@@ -224,7 +224,7 @@ $(function () {
     locale: {
       cancelLabel: "Clear",
     },
-    minDate: new Date("2022-04-20"),
+    minDate: new Date("2022-03-01"),
     maxDate: maxDate,
   });
 
