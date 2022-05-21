@@ -217,11 +217,15 @@ function PrintTabla(ver) {
   }
 }
 $(function () {
+  let maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() - 1);
   $('input[name="datefilter"]').daterangepicker({
     autoUpdateInput: false,
     locale: {
       cancelLabel: "Clear",
     },
+    minDate: new Date("2022-04-20"),
+    maxDate: maxDate,
   });
 
   $('input[name="datefilter"]').on(
