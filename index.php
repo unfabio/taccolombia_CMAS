@@ -26,7 +26,7 @@ session_start();
 <body>
   <div id="page-wrapper">
     <h1>CONVERSOR CMAS</h1>
-    <?php if (empty($_SESSION["usuario"])) { ?>
+    <?php if (!empty($_SESSION["usuario"])) { ?>
       Seleciones un archivo:
       <input type="file" id="fileInput" class="btn btn-primary" multiple="multiple" accept=".zip, .CMAS" />
       <button type="button" class="btn btn-success vertabla">
